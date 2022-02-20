@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\title{MATH242 HW3}
+\author{Zhangir Azerbayev}
+\date{Spring 2022}
+
+\input{preamble}
+
+\begin{document}
+\maketitle
+Using 3 late days. 
+
+
+\includepdf[pages=-,pagecommand={},width=\textwidth]{problem1.pdf}
+
+\begin{question}{Problem 2}
+    \begin{part}
+        Suppose $H_0$. Then $X\sim\mathcal{N}(50, \sigma^2=25)$. The probability of Type I error is $P(|X-50|>10) = P(|z|>2) = 0.05$. 
+    \end{part}
+    \begin{part}
+        Suppose $X\sim \mathrm{Binom}(100, 4/5)$. Then we can approximate $X\sim \mathcal{N}(80, 16)$. Therefore 
+        \begin{align*}
+            1 - \beta &= P(\text{reject }H_0)\\
+                      &= P(|X-50|>10)\\
+                      &= P\left(\frac{X-80}{4} > -5 \text{ or } \frac{X-80}{4} < -15/2\right)\\
+                      &= P(z > -5 \text{ or } z < -15/2)\\
+                      &\approx 1
+        \end{align*}
+    \end{part}
+\end{question}
+\begin{question}{Problem 3}
+    Since the hypotheses are simple, by the Neyman-Pearson lemma the most powerful test is the likelihood ratio test. Then 
+    \begin{align*}
+        \alpha &= P_{H_0}(L(X)<c)\\
+               &= P_{H_0}\left(\frac{1}{2X} < c\right)\\
+               &= P_{H_0}\left(\frac{1}{2c} < X\right)\\
+               &= 1 - \frac{1}{2c}. 
+    \end{align*}
+    Solving for $c$ gives us $c=9/5$. Therefore the power of the test is
+    \begin{align*}
+        1-\beta &= P_{H_1}(L(X)<c)\\
+                &= P_{H_1}\left(\frac{1}{2c} < X\right)\\
+                &= \int_{\frac{1}{2c}}^1 2x\mathrm{d}x = 0.19
+    \end{align*}
+\end{question}
+\begin{question}{Problem 4}
+    \begin{part}
+        We have that 
+        \[\prod_{i=1}^nf_0(X_i) = \frac{1}{\sigma_i\sqrt{2\pi}}\prod_{i=1}^ne^{\frac{1}{2}\left(\frac{x}{\sigma_i}\right)^2}. \]
+        Therefore
+        \begin{align*}
+            L(X) &= \left(\frac{\sigma_0}{\sigma_1}\right)^n\exp\left(-\frac{1}{2}\sum_{i=1}^n\left(\frac{X_i}{\sigma_0}\right)^2-\left(\frac{X_i}{\sigma_1}\right)^2\right)\\
+                 &= \left(\frac{\sigma_0}{\sigma_1}\right)^n\exp\left(\frac{1}{2\left(\frac{1}{\sigma_1^2}-\frac{1}{\sigma_0^2}\right)}\sum_{i=1}^nX_i^2\right). 
+        \end{align*}
+        Since $\sigma^2_0<\sigma^2_1$, the likelihood-ratio $L(X)$ is a decreasing function of $\sum_{i=1}^nX_i^2$. Thus setting our test statistic to $T=\sum_{i=1}^nX_i^2$ to perform the likelihood ratio test we need to find $c$ such that 
+        \[P_{H_0}(T > c) = \alpha. \]
+        Since $\frac{1}{\sigma_0^2}T \sim \chi_n^2$, we can choose $c=\sigma_0^2\chi_n^2(\alpha)$. So our rejection region is $T>\sigma_0^2\chi_n^2(\alpha)$. 
+    \end{part}
+    \begin{part}
+        The distribution of $\frac{1}{\sigma_1^2}T$ under $H_1$ is $\chi_n^2$ (this is equivalent to knowing the distribution of $T$ under $H_1$). We then get 
+        \begin{align*}
+            1-\beta&= P_{H_1}(T>\sigma_0^2\chi_n^2(\alpha))\\
+                   &= P_{H_1}\left(\frac{1}{\sigma_1^2}T>\frac{\sigma_0^2}{\sigma_1^2}\chi_n^2(\alpha)\right)\\
+                   &= 1-F\left(\frac{\sigma_0^2}{\sigma_1^2}\chi_n^2(\alpha)\right). 
+        \end{align*}
+    \end{part}
+\end{question}
+
+\end{document}

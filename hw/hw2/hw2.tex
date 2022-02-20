@@ -1,0 +1,76 @@
+\documentclass{article}
+
+\title{MATH242 HW1}
+\author{Zhangir Azerbayev}
+\date{Spring 22}
+
+\input{preamble}
+
+\begin{document}
+\maketitle
+
+Because I joined the course late, my due date for this assignment was Sunday February 13th. 
+On top of this, I used 2 late days. 
+\begin{question}{Problem 1}
+    We have $X = \sum_{i=1}^n X_i$ where the $X_i \sim \mathrm{Bernoulli}(p)$ and the $X_i$ are independent. We have that 
+    \begin{align*}
+        \E(e^{tX_i}) &= pe^t + (1-p)e^0\\
+                     &= 1 + p(e^t-1). 
+    \end{align*}
+    Therefore 
+    \begin{align*}
+        M_X(t) &= \prod_{i=1}^n M_{X_i}(t)\\
+               &= \left(1+p(e^t-1)\right)^n. 
+    \end{align*}
+\end{question}
+
+\begin{question}{Problem 2}
+    \begin{part}
+        Letting $a_1, a_2\in \R$ we see that 
+        \[a_1X_1 + a_2X_2 = (a_1c_1+a_2c_2)Z_1 + (a_1d_1+a_2d_2)Z_2 + a_1e_1 + a_2e_2,\]
+        which is normal. 
+    \end{part}
+    \begin{part}
+        Letting 
+        \begin{align*}
+            c_1 &= \sigma_1\\
+            d_1 &= 0 \\
+            e_1 &= \mu_1\\
+            c_2 &= \rho\sigma_2\\
+            d_2 &= \sigma_2\sqrt{1-\rho^2}\\
+            e_2 &= \mu_2
+        \end{align*}
+        we get the desired result. 
+    \end{part}
+\end{question}
+
+\begin{question}{Problem 3}
+    \begin{part}
+        We have that 
+        \[\E\left[\frac{f(X_i)}{g(X_i)}\right] = \int_a^b \frac{f(x)}{g(x)}g(x)dx = \int_a^b f(x)dx \]
+        therefore
+        \[\E\left[\frac{1}{n}\sum \frac{f(X_i)}{g(X_i)}\right] = \frac{1}{n}\sum \E\left[\frac{f(X_i)}{g(X_i)}\right] = \int_a^bf(x)dx. \]
+        If $\mathrm{Var}[f(X_i)/g(X_i)] < \infty$, then $\mathrm{Var}[\hat{I}_n(f)] = \frac{1}{n}\mathrm{Var}[f(X_i)/g(X_i)]$. Therefore as $n\to\infty$ the variance of $\hat{I}_n(f)$ goes to 0, thus $\hat{I}_n(f) \to \E[\hat{I}_n(f)] = I(f)$ with probability 1. 
+    \end{part}
+    \begin{part}
+        We have that 
+        \begin{align*}
+            \mathrm{Var}\left[\frac{f(X_i)}{g(X_i)}\right] &= \E\left[\left(\frac{f(X_i)}{g(X_i)}\right)^2\right] - \E\left[\frac{f(X_i)}{g(X_i)}\right]^2\\
+                                                           &= \int_a^b\frac{f(x)^2}{g(x)}dx - \left(\int_a^bf(x)dx\right)^2
+        \end{align*}
+        This implies that 
+        \[c_n = \frac{1}{\mathrm{Std}[\hat{I}_n(f)]} = \sqrt{n}\left(\int_a^b\frac{f(x)^2}{g(x)}dx - \left(\int_a^bf(x)dx\right)^2\right)^{-1}. \]
+
+    \end{part}
+    \begin{part}
+        We have that 
+        \begin{align*}
+            c_n &= \sqrt{1000}\left(\int_0^1\cos^2(2\pi x)dx - \left(\int_a^b\cos (2\pi x) dx\right)^2\right)^{-1}\\
+                &= 2\sqrt{1000}
+        \end{align*}
+    \end{part}
+    Therefore our desired probability is $P(|z| > 0.05c_n)$ where $z\sim \mathcal{N}(0, 1)$, which is approximately equal to 0.00157. 
+\end{question}
+
+\includepdf[pages=-,pagecommand={},width=\textwidth]{problem4.pdf}
+\end{document}
