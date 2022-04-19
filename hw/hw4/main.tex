@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\title{MATH242 HW4}
+\author{Zhangir Azerbayev}
+\date{Spring 2022}
+
+\input{preamble}
+
+\begin{document}
+\maketitle
+
+\begin{question}{Problem 1}
+
+    \begin{part}
+        For $n=1$ we have that $\sqrt{\frac{1}{1}U_1} = \sqrt{Y^2} = |Y|$. Therefore $T=X/|Y|$. The random variables $X/|Y|$ and $X/Y$ have the same distribution because for any $c\in\R$, the set of $(X, Y)$ pairs where $X/Y$ is $c$ is the same as the set $(X, Y)$ pairs where $X/|Y|$ is $c$. 
+    \end{part}
+    \begin{part}
+        We have that 
+        \begin{align*}
+            f(t) &= \int_{-\infty}^\infty|t|p_X(xt)p_Y(x)dx.\\
+                 &= \frac{1}{2\pi}\int_{-\infty}^\infty |x| e^{-\frac{1+t^2}{2}x^2}dx\\
+                 &= \frac{1}{\pi}\int_0^\infty xe^{-\frac{1+t^2}{2}x^2}dx.\\
+                 &= \frac{1}{\pi}\frac{1}{t^2+1}. 
+        \end{align*}
+        Because 
+        \[\E(T) = \int_\R \frac{t}{t^2+1}dt\]
+        we have $\E(T)=\infty$, since the integrand is asymptotically equal to $1/t$. Similarly, since we have 
+        \[\E(T^2) = \int_\R \frac{t^2}{t^2+1}dt\]
+        we have $\E(T^2) = \infty$, since the integrand is asymptotically equivalent to $1$. 
+    \end{part}
+\end{question}
+\begin{question}{Problem 2}
+    \begin{part}
+        Let $U_n = \sum^n Z_i^2$ where the $Z_i$ are independent standard normals. Then $\sqrt{\frac{1}{n}U_n} = \sqrt{\frac{1}{n}\sum^nZ_i^2}$. By the law of large numbers $\frac{1}{n}\sum^nZ_i^2 \to E(Z^2)=1$, and by the continuous mapping theorem $\sqrt{\frac{1}{n}\sum^nZ_i^2} \to \sqrt{1} = 1$. 
+    \end{part}
+    \begin{part}
+        Let $Z_n=Z$ for a standard normal $Z$ and $X_n = \sqrt{\frac{1}{n}U_n}$. Thus $Z_n \to \mathcal{N}(0, 1)$ in distribution and $X_n \to 1$ in probability. Therefore by Slutsky's lemma we have $T = Z_n/X_n \to Z/1 = Z$ in distribution, therefore $T$ approaches $\mathcal{N}(0, 1)$ in distribution. 
+    \end{part}
+\end{question}
+\begin{question}{Problem 3}
+    \begin{part}
+        Let $W=\sum_{i=1}^nkI_k$ a suggested in part (b). Due to symmetry, $I_k\sim\mathrm{Bernoulli}(1/2)$, therefore the distribution of $W$ does not depend on the distribution of $X_i$ and $W$ is pivotal. 
+    \end{part}
+    \begin{part}
+        An explicit calculation shows that $\E(I_k)=1/2$ and $\mathrm{Var}(I_k)=1/4$. Thus
+        \begin{align*}
+            \E(W) &= \sum_{k=1}^kkI_k\\
+                  &= \sum_{k=1}^k k\E(I_i)\\
+                  &=\frac{1}{2}\sum_{k=1}^nk\\
+                  &= \frac{n(n+1)}{4}. 
+        \end{align*}
+        Similarly
+        \begin{align*}
+            \mathrm{Var}(W) &= \sum_{k=1}^nk^2\mathrm{Var}(I_k)\\
+                            &= \frac{1}{4}\sum_{k=1}^nk^2\\
+                            &= \frac{n(n+1)(2n+1)}{24}. 
+        \end{align*}
+    \end{part}
+    \begin{part}
+        Compute the test statistic $W$ for you sample. Then reject the null hypothesis if $W > \Phi(1-\alpha)$. 
+    \end{part}
+\end{question}
+\includepdf[pages=-,pagecommand={},width=\textwidth]{problem4.pdf}
+\end{document}

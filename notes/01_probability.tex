@@ -1,0 +1,23 @@
+\chapter{Probability Review}
+\section{Moment Generating Function}
+A {moment-generating function (MGF)} is a clothesline on which to hang the moments of a probability distribution. The {\it $n$th moment} of a random variable $X$ is $EX^n$. the MGF is defined as 
+\[M_X(t) = Ee^{tX}\]
+for $t\in\R$. Notice that 
+\[M_X(t) = \sum_{n=1}^\infty \frac{t^nEX^n}{n!}. \]
+\begin{prop}
+    If $X$ and $Y$ are independent, $M_{X+Y}(t) = M_X(t)M_Y(t)$. 
+\end{prop}
+So the MGF is useful because it turns convolution into multiplication. Notice that this is like a Laplace transform. We have the following theorem that we won't prove. 
+\begin{thm}
+    Let $X$ and $Y$ be two random variables such that, for some $h>0$ and there is a positive measure set on which $M_X(t)$ and $M_Y(t)$ are finite and $M_X(t)=M_Y(t)$. Then $X$ and $Y$ have the same distribution. 
+\end{thm}
+If $Z\sim\mathcal{N}(0, 1)$, then $M_X(t)=e^{t^2/2}$. 
+
+\section{Multivariate Normal Distribution}
+The multivariate normal distribution is defined by a mean vector $\mu\in\R^k$ and a symmetric covariance matrix $\Sigma\in\R^{k\times k}$. 
+\begin{defn}
+    $(X_1, \dots, X_k)$ has a normal distribution if for every linear combination $\alpha_1X_1 + \dots + \alpha_kX_k$ is normal, 
+    and $EX_i = \mu_i$ and $\mathrm{Cov}(X_i, X_j) = \Sigma_{ij}$. 
+\end{defn}
+
+
