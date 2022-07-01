@@ -1,0 +1,77 @@
+\chapter{Frequentist Parametric Models}
+\section{Parameters}
+The focus of this chapter is estimating the parameters of a distribution and quantifying our uncertainty in our estimates. A {\it parametric model} is a family of probability distributions that can be described by a small number of parameters. Examples include the family of normal distributions, the family of Bernoulli distributions, and the family of Gamma distributions. 
+
+We will denote a general parametric model by $f(x\mid\theta)$, which depends on $k$ {\it parameters} $\theta\in\R^k$. For example, for the normal family we have $\theta=(\mu, \sigma^2)\in\R^2$. The set of possible parameters is called {\it parameter space}. 
+
+The fundamental question of this chapter is the following. Suppose we have $X_1, \dots, X_n$ drawn IID from $f(x|\theta)$, how can we estimate $\theta$ and quantify our uncertainty in this estimate? 
+
+\section{Bias, Variance, MSE}
+Consider the determination of a single parameter $\theta\in\R$. Any estimator $\hat{\theta}$ is a statistic, that is a function $\hat{\theta}(X_1, \dots, X_n)$ of the observed data. Suppose $X_1, \dots, X_n$ are IID from $f(x|\theta)$. Consider three ways of determining whether $\hat{\theta}$ is a good estimate: 
+\begin{itemize}
+    \item The {\bf bias} of $\hat{\theta}$ is $E_\theta[\hat{\theta}]-\theta$. 
+    \item The {\bf standard error} of $\hat{\theta}$ is $\sqrt{\mathrm{Var}_\theta \hat{\theta}}$. 
+    \item The {\bf mean-squared-error (MSE)} is $E_\theta[(\hat{\theta}-\theta)^2]$. 
+\end{itemize}
+Notice that for a random variable $Y$ and constant $c$ we have 
+\begin{align*}
+    E(Y-c)^2 &= E[(Y-EY + EY - c)^2]\\
+             &= E[(Y-EY)^2]+E[2(Y-EY)(EY-c)] + E[(EY-c)^2]\\
+             &= \mathrm{Var}Y + 2(EY-c)E[Y-EY] + (EY-c)^2\\
+             &= \mathrm{Var}Y + (EY-c)^2. 
+\end{align*}
+A consequence of this is that 
+\[\mathrm{MSE} = \mathrm{variance} + \mathrm{bias}^2. \]
+
+
+\section{Method of Moments}
+If $\theta\in\R$, then a simple possibility is to set the value of $\theta$ so that $E X = \frac{1}{n}(X_1+\dots+X_n)$. 
+
+Generally, if $\theta\in\R^k$, we equate the first $k$ moments of $X$ with their empirical value. We call this the {\bf method of moments estimator}. 
+
+\section{MLE}
+The {\bf likelihood} of the observed data $X_1, \dots, X_n$ is 
+\[L(\theta) = \prod f(X_1\mid\theta). \]
+The {\bf maximum likelihood estimator (MLE)} is the value of $\theta$ in the parameter space that maximizes $L(\theta)$. 
+
+In practice, we usually work with the log-likelihood 
+\[l(\theta) = \sum \log f(X_i\mid\theta). \]
+\section{Confidence Intervals}
+\subsection{A concrete motivation}
+Consider a Poisson model with true parameter $\lambda_0>0$. We know that the MLE is $\hat{\lambda}=\overline{X}$. We also know that 
+\[E_{\lambda_0}[\hat{\lambda}] = \lambda_0, \mathrm{Var}_{\lambda_0}[\hat{\lambda}] = \frac{\lambda_0}{n}. \]
+So $\hat{\lambda}$ is unbiased with standard error $\sqrt{\lambda_0/n}$. 
+
+By the law of large numbers, $\hat{lambda} \to \lambda_0$ in probability as $n\to\infty$. We say this means that $\hat{\lambda}$ is {\bf consistent}. Furthermore, by the central limit theorem we have 
+\[\sqrt{n}(\hat{\lambda}-\lambda_0) \to \mathcal{N}(0, \lambda_0) \]
+in distribution as $n\to\infty$. So for large $n$ the distribution of $\hat{\lambda}$ is approximately $\mathcal{N}(\lambda_0, \lambda_0/n)$. We say $\hat{\lambda}$ is asymptotically normal. 
+
+This normal approximation suggests a method for quantifying the uncertainty in $\lambda$. For a desired coverage level $1-\alpha\in(0,1)$ we can construct a {\bf confidence interval}, that is, a random interval that contains the true parameter $\lambda_0$ with probability $1-\alpha$. To construct such an interval, let $z(\alpha/2)$ be the upper-$\alpha/2$ point of the standard normal distribution. Then asymptotic normality implies 
+\[\sqrt{\frac{\lambda_0}{n}}z(\alpha/2) \leq\hat{\lambda}-\lambda_0\leq\sqrt{\frac{\lambda_0}{n}}z(\alpha/2). \]
+holds with probability $1-\alpha$ for large $n$. Therefore $\lambda_0$ belongs to the interval $\hat{\lambda} \pm \sqrt{\hat{\lambda}/n}\cdot z(\alpha/2)$ with probability approximately $1-\alpha$. 
+
+The formal guarantee is that as $n\to\infty$, the probability that the confidence interval covers $\lambda_0$ converges to $1-\alpha$. 
+\subsection{Asymptotic normality of the MLE}
+In the previous part's example, we were able to analyze $\hat{lambda}$ using the LLN and CLT because the estimate is the sample average. However, consistency and asymptotic normality hold for the MLE in general. 
+\begin{thm}
+    Let $f(x|\theta)$ be a parametric model, with a single parameter $\theta\in\R$. Let $\theta_0$ be the true parameter and $X_1, \dots, X_n$ drawn IID from $f(x\mid\theta_0)$. Let $\hat{\theta}$ be the MLE. Under some rather technical conditions, as $n\to\infty$
+    \begin{enumerate}
+        \item $\hat{\theta}$ is consistent, meaning $\hat{\theta}\to\theta_0$ in probability. 
+        \item $\hat{\theta}$ is asymptotically normal, and $\sqrt{n}(\hat{\theta}-\theta_0) \to\mathcal{N}(0, 1/I(\theta_0))$. 
+    \end{enumerate}
+    The function $I(\theta)$ has two equivalent forms 
+    \[I(\theta) = \mathrm{Var}_\theta\left[\frac{\partial}{\partial\theta}\log f(X|\theta)\right] = -E_\theta\left[\frac{\partial^2}{\partial \theta^2}\log f(X|\theta)\right]. \]
+    where $E_\theta$ and $\mathrm{Var}_\theta$ are the expectation and variance over $X\sim f(x|\theta)$.  
+\end{thm}
+The quantity $I(\theta)$ is called the {\bf Fisher information} and measures how sharp or shallow the maximum in the likelihood function is. Intuitively, we get an estimator with less variance when the maximum of the likelihood function is sharp. 
+
+This theorem tells us that the distribution of $\hat{\theta}$ is approximately $\mathcal{N}(\theta_0, \frac{1}{nI(\theta_0)}$. In practice, since we don't know $\theta_0$, we approximate $I(\theta_0)$ by $I(\hat{\theta})$, which we can do because {\bf why can we do this}. So our confidence interval with coverage $1-\alpha$ is 
+\[\hat{\theta} \pm \sqrt{\frac{1}{nI(\hat{\theta})}}\cdot z(\alpha/2). \]
+\section{Plug-in Estimators and the Delta Method}
+\begin{thm}{(The delta method).}
+    If a function $g:\R\to\R$ is continuously differentiable at $\theta\in\R$, and if 
+    \[\sqrt{n}(\hat{\theta}-\theta)\to\mathcal{N}(0, v(\theta))\]
+    in distribution as $n\to\infty$ for some variance $v(\theta)$, then 
+    \[\sqrt{n}(g(\hat{\theta}-g(\theta))\to\mathcal{N}(0, g'(\theta)^2v(\theta)). \]
+\end{thm}
+\section{Cramer-Rao Bound and Asymptotic Efficiency}

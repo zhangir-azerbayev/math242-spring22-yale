@@ -1,0 +1,22 @@
+\chapter{Bayesian Inference}
+So far, we have modelled the parameter $\theta$ is a fixed but unknown value. The crux of Bayesian inference is to model the unknown parameter itself as a random variable. The RV $\Theta$ has a probability distribution, $f_\Theta(\theta)$ called the {\bf prior distribution}. The parametric model describing the conditional distribution of $X$ given $\Theta$ we now write as $f_{X\mid\Theta}(x\mid\theta)$, where previously it was $f(x\mid\theta)$. 
+
+This defines a joint probability distribution over $\Theta$ and $X$, as
+\[f_{X, \Theta}(x, \theta) = f_{X|\Theta}(x|\theta)f_\Theta(\theta). \]
+Thus the marginal distribution of $X$ is 
+\[f_X(x) = \int f_{X, \Theta}(x, \theta)d\theta = \int f_{X|\Theta}(x|\theta)f_{\Theta}(\theta)d\theta. \]
+Bayesian inference is based on the conditional distribution of $\Theta$ given $X$, that is
+\[f_{\Theta|X}(\theta|x) = \frac{f_{X,\Theta}(x,\theta)}{f_X(x)}=\frac{f_{X|\Theta}(x|\theta)f_{\Theta}(\theta)}{f_X(x)}.\]
+This is called the {\bf posterior distribution} of $\Theta$. This is summarized as
+\[\mathrm{Posterior}\propto\mathrm{Likelihood}\times\mathrm{Prior}\]
+Note that the $1/f_X(x)$ factor does not depend on $\Theta$. 
+
+\begin{example}
+    Consider a $X_1, \dots, X_n \iid\mathrm{Bernoulli}(p)$ model with a uniform prior. Then we have that 
+    \[f_{P|X}(p|x_1, \dots, x_n)\propto f_{X|P}(x_1, \dots, x_n|p)f_P(p) = p^s(1-p)^{n-s}. \]
+    The only possible choice for the normalization constant is $B(s+1, n-s+1)$, so we know that 
+    \[f_{P|X}(p|x_1, \dots, x_n) = \frac{1}{B(s+1, n-s+1)}p^s(1-p)^{n-s}. \]
+    It's very simple to show that if $f_P(p) = \mathrm{Beta}(\alpha, \beta)$, then 
+    \[f_{P|X}(p|x_1, \dots, x_n) \sim \mathrm{Beta}(s+\alpha+1, n+\beta-s). \]
+\end{example}
+

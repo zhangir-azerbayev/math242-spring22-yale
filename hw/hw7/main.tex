@@ -1,0 +1,60 @@
+\documentclass{article}
+\input{preamble}
+\title{S\&DS242 HW7}
+\author{Zhangir Azerbayev}
+\date{Spring 2022}
+
+\begin{document}
+\maketitle
+
+\begin{question}{Problem 1}
+    \begin{part}
+        We have that 
+        \[\mu = \int_{\theta}^\infty xe^{x-\theta}dx = 1+\theta\]
+        so we get the method of moments estimate by setting $\bar{X}=1+\theta$, which gives us $\theta=\bar{X}-1$. 
+    \end{part}
+    \begin{part}
+        Notice that if $\theta<\min X_i$, we get 0 likelihood. Therefore we can constrain ourselves to looking for $\argmax_\theta L(\theta)$ where $\theta\leq \min X_i$. Applying this constraint, we get that
+        \begin{align*}
+            \argmax_\theta L(\theta) &=\argmax_\theta l(\theta)\\
+                                     &= \argmax_\theta\sum_i \log e^{-(X_i-\theta)}\\
+                                     &= \argmax_\theta\sum_i \theta - X_i\\
+                                     &= \argmax_\theta n\theta - \sum_i X_i\\
+                                     &= \argmax_\theta\theta
+        \end{align*}
+        Therefore $\hat{\theta}_{MLE} = \min_i X_i$. 
+    \end{part}
+\end{question}
+\begin{question}{Problem 2}
+    \begin{part} 
+        Reasonable estimators are $\hat{p}=\frac{\sum_iX_i}{n}$ and $\hat{q}=\frac{\sum_iY_i}{m}$. A plug-in estimator for the log-odds ratio is 
+        \[g(\hat{p}, \hat{q}) = \log\left(\frac{\frac{\hat{p}}{1-\hat{p}}}{\frac{\hat{q}}{1-\hat{q}}}\right)\]
+    \end{part}
+    \begin{part}
+        To simplify our calculations, write
+        \[g(p, q) = \log p -\log(1-p) -\log q + \log (1-q). \]
+        Applying the Taylor expansion we get that 
+        \[g(\hat{p}, \hat{q}) \approx +\frac{\hat{p}-p}{p(1-p)} + \frac{\hat{q}-q}{q(1-q)}\]
+        By the CLT, we get that $\sqrt{n}(\hat{p}-p) \to \mathcal{N}(0, p(1-p))$ and $\sqrt{m}(\hat{q}-q)\to \mathcal{N}(0, q(1-q))$. Asymptotically, both error terms are independent Gaussians, so their sum is a Gaussian with appropriate parameters. Thus in the limit 
+        \[g(\hat{p}, \hat{q}) \sim \mathcal{N}\left(g(p, q), \frac{1}{np(1-p)} + \frac{1}{mq(1-q)}\right). \]
+    \end{part}
+\end{question}
+
+\begin{question}{Problem 3}
+    \begin{part}
+        We have that 
+        \[\frac{\sqrt{n}(\hat{p}-p)}{\sqrt{\hat{p}(1-\hat{p}}}\to\mathcal{N}(0,1)\]
+    \end{part}
+    as $n\to\infty$. Therefore our confidence interval is
+    \[\hat{p}-sqrt{\frac{\hat{p}(1-\hat{p})}{n}}z(0.025)\leq p\leq \hat{p}+\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}z(0.025)\]
+    \begin{part}
+        We are inside the interval in question whenever 
+        \[n(\hat{p}-p)^2 \leq p(1-p)z(\alpha/2)^2, \]
+        or equivalently when 
+        \[(n+z(\alpha/2)^2)p^2 - (2n\hat{p}+z(\alpha/2)^2)p + n\hat{p}^2\leq 0. \]
+        Notice the left-hand side is a quadratic equation with positive leading coefficient, so applying the quadratic formula we get a confidence interval of 
+        \[\frac{\hat{p}+\frac{z(0.025)^2}{2n}\pm z(0.025)\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z(0.025)^2}{4n^2}}}{1+\frac{z(0.025)^2}{n}}\]
+    \end{part}
+\end{question}
+\includepdf[pages=-]{hw7.pdf}
+\end{document}
